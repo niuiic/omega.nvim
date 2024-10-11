@@ -2,6 +2,11 @@ local M = {}
 
 function M.get_selection()
 	local mode = vim.api.nvim_get_mode().mode
+
+	if mode == "n" then
+		return vim.fn.expand("cword")
+	end
+
 	local area = require("omega.get_selected_area").get_selected_area()
 
 	if mode == "v" or mode == "V" then

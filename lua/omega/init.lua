@@ -6,7 +6,8 @@
 ---@field is_dir fun(path: string): boolean check if path is dir
 ---@field exist_in_file fun(text: string, path: string): boolean check if text exists in file
 ---@field get_selected_area fun(): omega.Area get selected area
----@field get_selection fun(): string | nil get selected text
+---@field get_selection fun(): string | nil get selected text, get cursor word in normal mode, work in mode 'n', 'v' and 'V'
+---@field to_normal_mode fun() enter normal mode
 
 local fns = {
 	"dofile",
@@ -17,6 +18,7 @@ local fns = {
 	"exist_in_file",
 	"get_selected_area",
 	"get_selection",
+	"to_normal_mode",
 }
 
 local function call(fn)
