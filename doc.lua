@@ -37,7 +37,7 @@ end
 local docs = {}
 local skip_line = false
 for line in file:lines() do
-	if not skip_line and not string.find(line, "## functions", 1, true) then
+	if not skip_line and not string.find(line, "## Functions", 1, true) then
 		table.insert(docs, line)
 	elseif not skip_line then
 		skip_line = true
