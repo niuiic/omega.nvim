@@ -1,14 +1,14 @@
-local function call(fn)
-	return function(...)
-		require("omega." .. fn)[fn](...)
-	end
-end
-
 local fns = {
 	"root_pattern",
 	"dofile",
 	"exist",
 }
+
+local function call(fn)
+	return function(...)
+		require("omega." .. fn)[fn](...)
+	end
+end
 
 ---@type Omega
 ---@diagnostic disable-next-line: missing-fields
