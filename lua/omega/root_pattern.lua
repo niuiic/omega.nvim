@@ -3,7 +3,7 @@ local M = {}
 function M.root_pattern(...)
 	local patterns = { ... }
 	---@type string | nil
-	local dir = M._normalize_path(vim.fn.getcwd(-1, -1))
+	local dir = M._normalize_path(vim.fn.getcwd())
 
 	while dir do
 		for _, pattern in ipairs(patterns) do
