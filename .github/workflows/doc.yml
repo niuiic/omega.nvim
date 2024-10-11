@@ -1,0 +1,26 @@
+name: doc
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  doc:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+    steps:
+      - uses: actions/checkout@master
+      - uses: leafo/gh-actions-lua@v10
+        with:
+          luaVersion: "luajit-2.1.0-beta3"
+      - run: luajit doc.lua
+      - uses: EndBug/add-and-commit@v9
+        with:
+          message: "docs: update README"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
