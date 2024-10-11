@@ -5,6 +5,8 @@
 ---@field list_find fun(list: any[], fn: fun(item: any): boolean): any | nil find item in a list
 ---@field is_dir fun(path: string): boolean check if path is dir
 ---@field exist_in_file fun(text: string, path: string): boolean check if text exists in file
+---@field get_selected_area fun(): omega.Area get selected area
+---@field get_selection fun(): string | nil get selected text
 
 local fns = {
 	"dofile",
@@ -13,6 +15,8 @@ local fns = {
 	"list_find",
 	"is_dir",
 	"exist_in_file",
+	"get_selected_area",
+	"get_selection",
 }
 
 local function call(fn)
