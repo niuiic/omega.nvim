@@ -6,7 +6,7 @@ local fns = {
 
 local function call(fn)
 	return function(...)
-		require("omega." .. fn)[fn](...)
+		return require("omega." .. fn)[fn](...)
 	end
 end
 
