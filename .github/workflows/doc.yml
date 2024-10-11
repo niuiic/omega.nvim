@@ -16,9 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - uses: leafo/gh-actions-lua@v10
-        with:
-          luaVersion: "luajit-2.1.0-beta3"
-      - run: luajit doc.lua
+      - run: lua doc.lua
       - uses: EndBug/add-and-commit@v9
         with:
           message: "docs: update README"
