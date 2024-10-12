@@ -1,11 +1,11 @@
 local M = {}
 
 function M.exist_in_file(text, path)
-	if not require("omega.exist").exist(path) then
+	if not vim.uv.fs_stat(path) then
 		return false
 	end
 
-	if require("omega.is_dir").is_dir(path) then
+	if vim.fn.isdirectory(path) then
 		return false
 	end
 
