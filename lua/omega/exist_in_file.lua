@@ -10,11 +10,7 @@ function M.exist_in_file(text, path)
 	end
 
 	local lines = vim.fn.readfile(path, "")
-	local file = ""
-	for _, line in ipairs(lines) do
-		file = file .. "\n" .. line
-	end
-	file = string.sub(file, 2)
+	local file = vim.iter(lines):join("\n")
 
 	return string.find(file, text, 1, true) ~= nil
 end
