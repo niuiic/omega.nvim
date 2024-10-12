@@ -1,2 +1,4 @@
 .lua/
 .nvim/
+target/
+omega_rs.so
