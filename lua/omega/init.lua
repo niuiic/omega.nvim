@@ -2,7 +2,7 @@
 ---@field dofile fun(file_path: string) [dofile without cache]
 ---@field exist_in_file fun(text: string, path: string): boolean [check if text exists in file]
 ---@field get_selected_area fun(): omega.Area [get selected area]
----@field get_selection fun(): string | nil [get selected text, get cursor word in normal mode]
+---@field get_selection fun(): string[] | nil [get selected text, get cursor word in normal mode]
 ---@field to_normal_mode fun() [enter normal mode]
 
 local fns = {
