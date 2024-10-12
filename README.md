@@ -2,6 +2,8 @@
 
 Lua development utilities for Neovim.
 
+All functions are lazy load.
+
 ## Dev
 
 Run current lua file with `require("omega").dofile(vim.api.nvim_buf_get_name(0))`. This function would unload deps of the file before running it, thus you can check the real-time update of the file without restart neovim.
