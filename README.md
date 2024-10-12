@@ -14,6 +14,14 @@ It's recommended to do unit test with this function and builtin `assert`. Check 
 
 ## Functions
 
+name|type|desc
+-|-|-
+dofile|fun(file_path: string)|dofile without cache
+exist_in_file|fun(text: string, path: string): boolean|check if text exists in file
+get_selected_area|fun(): omega.Area|get selected area
+get_selection|fun(): string \| nil|get selected text, get cursor word in normal mode, work in mode 'n', 'v' and 'V'
+to_normal_mode|fun()|enter normal mode
+
 ## Useful Neovim Builtin Functions
 
 | name               | usage                        |
