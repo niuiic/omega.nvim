@@ -8,6 +8,7 @@
 ---@field get_selected_area fun(): omega.Area [get selected area]
 ---@field get_selection fun(): string | nil [get selected text, get cursor word in normal mode, work in mode 'n', 'v' and 'V']
 ---@field to_normal_mode fun() [enter normal mode]
+---@field spawn fun(cmd: string, args?: string[], on_exit?: fun(ok: boolean, output?: string, err?: string), cwd?: string, env?: string): uv_process_t [spawn an command]
 
 local fns = {
 	"dofile",
@@ -19,6 +20,7 @@ local fns = {
 	"get_selected_area",
 	"get_selection",
 	"to_normal_mode",
+	"spawn",
 }
 
 local function call(fn)
