@@ -4,7 +4,7 @@ function M.get_selection()
 	local mode = vim.api.nvim_get_mode().mode
 
 	if mode == "n" then
-		return { vim.fn.expand("cword") }
+		return { vim.fn.expand("<cexpr>") }
 	end
 
 	local ok, selection = pcall(function()
