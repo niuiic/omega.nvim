@@ -5,7 +5,7 @@ function M.exist_in_file(text, path)
 		return false
 	end
 
-	if vim.fn.isdirectory(path) then
+	if vim.fn.isdirectory(path) == 1 then
 		return false
 	end
 
