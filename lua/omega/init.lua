@@ -26,6 +26,4 @@ for _, fn in ipairs(fns) do
 	M[fn] = call(fn)
 end
 
-package.cpath = package.cpath .. ";" .. string.match(debug.getinfo(1).source:sub(2), "(.+)/omega/init.lua")
-
 return M
