@@ -4,6 +4,7 @@
 ---@field get_selected_area fun(): omega.Area [get selected area]
 ---@field get_selection fun(): string[] | nil [get selected text, get cursor expr in normal mode]
 ---@field to_normal_mode fun() [enter normal mode]
+---@field get_timestamp fun(time?: string) [get a millisecond-level timestamp, time format should be like '2022-01-01 00:00:00']
 
 local fns = {
 	"dofile",
