@@ -1,5 +1,6 @@
 use mlua::prelude::*;
 
+mod diff;
 mod time;
 
 #[mlua::lua_module]
@@ -9,6 +10,10 @@ fn omega_rs(lua: &Lua) -> LuaResult<LuaTable> {
     exports.set(
         "get_human_readable_duration",
         lua.create_function(time::get_human_readable_duration)?,
+    )?;
+    exports.set(
+        "calc_text_edits",
+        lua.create_function(diff::calc_text_edits)?,
     )?;
     Ok(exports)
 }

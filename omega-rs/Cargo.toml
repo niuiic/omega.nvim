@@ -9,4 +9,6 @@ crate-type = ["cdylib"]
 [dependencies]
 chrono = "0.4.38"
 humantime = "2.1.0"
+lsp-types = "0.97.0"
 mlua = { version = "0.9.9", features = ["luajit", "module", "async"] }
+similar = "2.6.0"
