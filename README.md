@@ -30,6 +30,7 @@ get_selected_area|fun(): omega.Area|get selected area
 get_selection|fun(): string[] \| nil|get selected text, get cursor expr in normal mode
 to_normal_mode|fun()|enter normal mode
 get_timestamp|fun(time?: string)|get a millisecond-level timestamp, time format should be like '2022-01-01 00:00:00'
+get_human_readable_duration|fun(start_time: number, end_time: number)|get a human-readable duration between two millisecond-level timestamps
 
 ## Useful Neovim Builtin Functions
 
