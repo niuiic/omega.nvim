@@ -1,0 +1,6 @@
+target("omega-rs")
+set_kind("phony")
+on_build(function()
+	os.cd("omega-rs")
+	os.exec("cargo build --release")
+end)
