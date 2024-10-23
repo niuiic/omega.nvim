@@ -14,9 +14,6 @@ fn omega_rs(lua: &Lua) -> LuaResult<LuaTable> {
         "get_human_readable_duration",
         lua.create_function(time::lua_get_human_readable_duration)?,
     )?;
-    exports.set(
-        "calc_text_edits",
-        lua.create_function(diff::calc_text_edits)?,
-    )?;
+    exports.set("diff_text", lua.create_async_function(diff::lua_diff_text)?)?;
     Ok(exports)
 }

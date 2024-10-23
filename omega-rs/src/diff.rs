@@ -1,19 +1,20 @@
 use lsp_types::{Position, Range, TextEdit};
-use mlua::prelude::*;
+use mlua::{prelude::*, RegistryKey};
 use similar::{ChangeTag, TextDiff};
 
-pub fn calc_text_edits(lua: &Lua, texts: (String, String)) -> LuaResult<LuaTable> {
-    let table = lua.create_table()?;
-    let edits = _calc_text_edits(texts.0, texts.1)?;
-
-    for (i, edit) in edits.iter().enumerate() {
-        table.set(i + 1, edit_to_table(lua, edit)?)?;
-    }
-
-    Ok(table)
+// % diff_text %
+pub async fn lua_diff_text<'a>(
+    lua: &'a Lua,
+    (old_text, new_text, callback): (String, String, LuaFunction<'a>),
+) -> LuaResult<()> {
+    let callback_key: RegistryKey = lua.create_registry_value(callback.clone()).unwrap();
+    callback.call::<String, ()>("hello".to_string()).unwrap();
+    lua.remove_registry_value(callback_key).unwrap();
+    Ok(())
 }
 
-fn _calc_text_edits(old_text: String, new_text: String) -> LuaResult<Vec<TextEdit>> {
+// % calc_text_edits %
+fn calc_text_edits(old_text: String, new_text: String) -> Result<Vec<TextEdit>, String> {
     let mut edits = Vec::<TextEdit>::new();
 
     let diff = TextDiff::from_lines(&old_text, &new_text);
@@ -22,6 +23,10 @@ fn _calc_text_edits(old_text: String, new_text: String) -> LuaResult<Vec<TextEdi
     let mut start_col = 0;
 
     for change in diff.iter_all_changes() {
+        println!(
+            "[1] QUICK_PRINT(omega-rs/src/diff.rs:20) change = {:?}",
+            change
+        );
         match change.tag() {
             ChangeTag::Delete => {
                 let range = Range {
@@ -54,23 +59,20 @@ fn _calc_text_edits(old_text: String, new_text: String) -> LuaResult<Vec<TextEdi
     Ok(edits)
 }
 
-fn edit_to_table<'a>(lua: &'a Lua, edit: &TextEdit) -> LuaResult<LuaTable<'a>> {
-    let table = lua.create_table()?;
-    table.set("range", range_to_table(lua, &edit.range)?)?;
-    table.set("new_text", edit.new_text.clone())?;
-    Ok(table)
-}
+// % test %
+#[cfg(test)]
+mod tests {
+    use std::{env, fs};
 
-fn range_to_table<'a>(lua: &'a Lua, range: &Range) -> LuaResult<LuaTable<'a>> {
-    let table = lua.create_table()?;
-    table.set("start", position_to_table(lua, &range.start)?)?;
-    table.set("end", position_to_table(lua, &range.end)?)?;
-    Ok(table)
-}
+    use super::*;
 
-fn position_to_table<'a>(lua: &'a Lua, position: &Position) -> LuaResult<LuaTable<'a>> {
-    let table = lua.create_table()?;
-    table.set("line", position.line)?;
-    table.set("character", position.character)?;
-    Ok(table)
+    #[test]
+    fn test_calc_text_edits() {
+        let current_dir = env::current_dir().unwrap();
+
+        let old_text = fs::read_to_string(current_dir.join("tests/diff/old.md").as_path()).unwrap();
+        let new_text = fs::read_to_string(current_dir.join("tests/diff/new.md").as_path()).unwrap();
+
+        let result = calc_text_edits(old_text, new_text);
+    }
 }
