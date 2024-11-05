@@ -13,6 +13,8 @@ local fns = {
 	"get_selected_area",
 	"get_selection",
 	"to_normal_mode",
+	"get_timestamp",
+	"get_human_readable_duration",
 }
 
 local function call(fn)
