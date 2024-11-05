@@ -1,25 +1,25 @@
 use std::time::Duration;
 
-use chrono::{DateTime, NaiveDateTime, Utc};
+use chrono::{Local, NaiveDateTime};
 use humantime::format_duration;
 use mlua::prelude::*;
 
 // % get_timestamp %
-pub fn get_timestamp(_: &Lua, date: Option<String>) -> LuaResult<i64> {
-    _get_timestamp(date)
+pub fn get_timestamp(_: &Lua, time: Option<String>) -> LuaResult<i64> {
+    _get_timestamp(time)
 }
 
-fn _get_timestamp(date: Option<String>) -> LuaResult<i64> {
-    if date.is_none() {
-        let now = Utc::now();
-        return Ok(now.timestamp_millis());
+fn _get_timestamp(time: Option<String>) -> LuaResult<i64> {
+    if time.is_none() {
+        return Ok(Local::now().timestamp_millis());
     }
 
-    let date_str = &date.unwrap();
-    let native_date_time = NaiveDateTime::parse_from_str(date_str, "%Y-%m-%d %H:%M:%S")
-        .map_err(|_| mlua::Error::RuntimeError("invalid date format".to_string()))?;
-    let time = DateTime::<Utc>::from_naive_utc_and_offset(native_date_time, Utc);
-    Ok(time.timestamp_millis())
+    let native_date_time = NaiveDateTime::parse_from_str(&time.unwrap(), "%Y-%m-%d %H:%M:%S")
+        .map_err(|_| mlua::Error::RuntimeError("invalid time format".to_string()))?;
+    Ok(native_date_time
+        .and_local_timezone(Local::now().timezone())
+        .unwrap()
+        .timestamp_millis())
 }
 
 // % get_human_readable_duration %
@@ -42,12 +42,22 @@ fn _get_human_readable_duration(start: i64, end: i64) -> LuaResult<String> {
 // % test %
 #[cfg(test)]
 mod test {
+    use chrono::DateTime;
+
     use super::*;
 
     #[test]
     fn test_get_timestamp() {
-        _get_timestamp(None).unwrap();
-        _get_timestamp(Some("2022-01-01 00:00:00".to_string())).unwrap();
+        let now = _get_timestamp(None).unwrap();
+        let now_str = DateTime::from_timestamp_millis(now)
+            .unwrap()
+            .with_timezone(&Local::now().timezone())
+            .format("%Y-%m-%d %H:%M:%S")
+            .to_string();
+        assert_eq!(
+            (_get_timestamp(Some(now_str)).unwrap() - now).abs() < 1000,
+            true
+        );
     }
 
     #[test]
