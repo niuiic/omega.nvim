@@ -31,6 +31,7 @@ get_selection|fun(): string[] \| nil|get selected text, get cursor expr in norma
 to_normal_mode|fun()|enter normal mode
 get_timestamp|fun(time?: string): number|get a millisecond-level timestamp, time format should be like '2022-01-01 00:00:00'
 get_human_readable_duration|fun(start_time: number, end_time: number): string|get a human-readable duration between two millisecond-level timestamps
+get_chars|fun(str: string): string[]|get chars from a string, work for any transformation format
 
 ## Useful Neovim Builtin Functions
 
