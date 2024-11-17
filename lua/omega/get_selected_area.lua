@@ -17,7 +17,7 @@ function M.get_selected_area()
 		start_col = 1
 		---@diagnostic disable-next-line: param-type-mismatch
 		local end_line = vim.api.nvim_buf_get_lines(0, end_lnum - 1, end_lnum, false)[1]
-		end_col = string.len(end_line)
+		end_col = vim.fn.strdisplaywidth(end_line)
 	end
 
 	return { start_lnum = start_lnum, start_col = start_col, end_lnum = end_lnum, end_col = end_col }
