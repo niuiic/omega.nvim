@@ -9,4 +9,4 @@ crate-type = ["cdylib"]
 [dependencies]
 chrono = "0.4.38"
 humantime = "2.1.0"
-mlua = { version = "0.9.9", features = ["luajit", "module", "async"] }
+mlua = { version = "0.10.1", features = ["luajit", "module", "async", "send"] }
