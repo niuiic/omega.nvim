@@ -5,11 +5,11 @@ use humantime::format_duration;
 use mlua::prelude::*;
 
 // % get_timestamp %
-pub fn get_timestamp(_: &Lua, time: Option<String>) -> LuaResult<i64> {
-    _get_timestamp(time)
+pub fn lua_get_timestamp(_: &Lua, time: Option<String>) -> LuaResult<i64> {
+    get_timestamp(time)
 }
 
-fn _get_timestamp(time: Option<String>) -> LuaResult<i64> {
+fn get_timestamp(time: Option<String>) -> LuaResult<i64> {
     if time.is_none() {
         return Ok(Local::now().timestamp_millis());
     }
@@ -23,11 +23,11 @@ fn _get_timestamp(time: Option<String>) -> LuaResult<i64> {
 }
 
 // % get_human_readable_duration %
-pub fn get_human_readable_duration(_: &Lua, time: (i64, i64)) -> LuaResult<String> {
-    _get_human_readable_duration(time.0, time.1)
+pub fn lua_get_human_readable_duration(_: &Lua, time: (i64, i64)) -> LuaResult<String> {
+    get_human_readable_duration(time.0, time.1)
 }
 
-fn _get_human_readable_duration(start: i64, end: i64) -> LuaResult<String> {
+fn get_human_readable_duration(start: i64, end: i64) -> LuaResult<String> {
     if start > end {
         return Err(mlua::Error::RuntimeError(
             "start time is after the end time".to_string(),
@@ -48,21 +48,21 @@ mod test {
 
     #[test]
     fn test_get_timestamp() {
-        let now = _get_timestamp(None).unwrap();
+        let now = get_timestamp(None).unwrap();
         let now_str = DateTime::from_timestamp_millis(now)
             .unwrap()
             .with_timezone(&Local::now().timezone())
             .format("%Y-%m-%d %H:%M:%S")
             .to_string();
         assert_eq!(
-            (_get_timestamp(Some(now_str)).unwrap() - now).abs() < 1000,
+            (get_timestamp(Some(now_str)).unwrap() - now).abs() < 1000,
             true
         );
     }
 
     #[test]
     fn test_get_human_readable_duration() {
-        let res = &_get_human_readable_duration(1729515061307, 1729515071307).unwrap();
+        let res = &get_human_readable_duration(1729515061307, 1729515071307).unwrap();
         assert_eq!(res, "10s");
     }
 }
