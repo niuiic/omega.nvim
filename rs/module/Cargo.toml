@@ -1,5 +1,5 @@
 [package]
-name = "omega-rs"
+name = "omega_module"
 version = "0.1.0"
 edition = "2021"
 

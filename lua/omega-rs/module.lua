@@ -11,11 +11,11 @@ end
 package.cpath = package.cpath
 	.. ";"
 	.. debug.getinfo(1).source:match("@?(.*/)")
-	.. "../omega-rs/target/release/lib?"
+	.. "../../rs/target/release/lib?"
 	.. get_lib_extension()
 	.. ";"
 	.. debug.getinfo(1).source:match("@?(.*/)")
-	.. "../omega-rs/target/release/?"
+	.. "../../rs/target/release/?"
 	.. get_lib_extension()
 
-return require("omega_rs")
+return require("omega_module")

@@ -4,7 +4,7 @@ mod time;
 mod utf;
 
 #[mlua::lua_module]
-fn omega_rs(lua: &Lua) -> LuaResult<LuaTable> {
+fn omega_module(lua: &Lua) -> LuaResult<LuaTable> {
     let exports = lua.create_table()?;
 
     exports.set(
