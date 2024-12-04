@@ -32,6 +32,7 @@ to_normal_mode|fun()|enter normal mode
 get_timestamp|fun(time?: string): number|get a millisecond-level timestamp, time format should be like '2022-01-01 00:00:00'
 get_human_readable_duration|fun(start_time: number, end_time: number): string|get a human-readable duration between two millisecond-level timestamps
 get_chars|fun(str: string): string[]|get chars from a string, work for any transformation format
+diff_text|fun(old_text: string, new_text: string, callback: fun(text_edits: omega.TextEdit[]))|calculate text edits between two texts
 
 ## Useful Neovim Builtin Functions
 
