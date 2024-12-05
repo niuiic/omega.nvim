@@ -7,7 +7,10 @@ fn main() {
 
     match command {
         cli::Commands::Diff { old_text, new_text } => {
-            match text_edit::get_line_level_text_edits(old_text, new_text) {
+            match text_edit::get_line_level_text_edits(
+                old_text[1..old_text.len() - 1].to_string(),
+                new_text[1..new_text.len() - 1].to_string(),
+            ) {
                 Err(e) => {
                     eprintln!("{}", e)
                 }
