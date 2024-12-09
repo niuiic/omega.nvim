@@ -33,6 +33,8 @@ get_timestamp|fun(time?: string): number|get a millisecond-level timestamp, time
 get_human_readable_duration|fun(start_time: number, end_time: number): string|get a human-readable duration between two millisecond-level timestamps
 get_chars|fun(str: string): string[]|get chars from a string, work for any transformation format
 diff_text|fun(old_text: string, new_text: string, callback: fun(text_edits: omega.TextEdit[]))|calculate text edits between two texts
+get_line_ending|fun(bufnr: number): string|get buffer specific line_ending character
+get_offset_encoding|fun(): string|get offset encoding
 
 ## Useful Neovim Builtin Functions
 
