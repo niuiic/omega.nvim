@@ -8,6 +8,7 @@
 ---@field get_human_readable_duration fun(start_time: number, end_time: number): string [get a human-readable duration between two millisecond-level timestamps]
 ---@field get_chars fun(str: string): string[] [get chars from a string, work for any transformation format]
 ---@field diff_text fun(old_text: string, new_text: string, callback: fun(text_edits: omega.TextEdit[])) [calculate text edits between two texts]
+---@field get_line_ending fun(bufnr: number): string [get buffer specific line_ending character]
 
 local fns = {
 	"dofile",
@@ -19,6 +20,7 @@ local fns = {
 	"get_human_readable_duration",
 	"get_chars",
 	"diff_text",
+	"get_line_ending",
 }
 
 local function call(fn)
