@@ -9,6 +9,7 @@
 ---@field get_chars fun(str: string): string[] [get chars from a string, work for any transformation format]
 ---@field diff_text fun(old_text: string, new_text: string, callback: fun(text_edits: omega.TextEdit[])) [calculate text edits between two texts]
 ---@field get_line_ending fun(bufnr: number): string [get buffer specific line_ending character]
+---@field get_offset_encoding fun(): string [get offset encoding]
 
 local fns = {
 	"dofile",
@@ -21,6 +22,7 @@ local fns = {
 	"get_chars",
 	"diff_text",
 	"get_line_ending",
+	"get_offset_encoding",
 }
 
 local function call(fn)
