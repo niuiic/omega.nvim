@@ -10,8 +10,8 @@
 ---@field diff_text fun(old_text: string, new_text: string, callback: fun(text_edits: omega.TextEdit[])) [calculate text edits between two texts]
 ---@field get_line_ending fun(bufnr: number): string [get buffer specific line_ending character]
 ---@field get_offset_encoding fun(): string [get offset encoding]
----@field async fun(fn: fun()) [run a function asynchronously]
----@field await fun(fn: fun(callback: fun(value: any))): any [wait for a asynchronous function]
+---@field async fun(fn: fun()) [convert a synchronous function to an asynchronous one]
+---@field await fun(fn: fun(resolve: fun(...: any[]))): any, any, ... [wait for a asynchronous function]
 
 local fns = {
 	"dofile",
