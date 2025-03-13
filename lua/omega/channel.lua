@@ -58,7 +58,9 @@ function Channel:read(callback)
 end
 
 function Channel:close()
-	self.job:kill(9)
+	if not self.job.is_closing() then
+		self.job:kill(9)
+	end
 end
 
 return Channel
