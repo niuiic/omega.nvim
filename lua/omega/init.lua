@@ -12,6 +12,7 @@
 ---@field get_offset_encoding fun(): string [get offset encoding]
 ---@field async fun(fn: fun()) [convert a synchronous function to an asynchronous one]
 ---@field await fun(fn: fun(resolve: fun(...: any[]))): any, any, ... [wait for a asynchronous function]
+---@field Channel omega.Channel [spawn a process and enable bidirectional communication through stdin/stdout, check omega/channel.test.lua for examples]
 
 local fns = {
 	"dofile",
@@ -37,8 +38,11 @@ end
 
 ---@type Omega
 ---@diagnostic disable-next-line: missing-fields
-local M = {}
+local M = {
+	Channel = require("omega.channel"),
+}
 for _, fn in ipairs(fns) do
+	---@diagnostic disable-next-line: assign-type-mismatch
 	M[fn] = call(fn)
 end
 

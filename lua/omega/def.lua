@@ -17,3 +17,9 @@
 ---@class omega.Position
 ---@field line number
 ---@field character number
+
+---@class omega.Channel
+---@field new fun(self: omega.Channel, cmd: string[], opts: vim.SystemOpts | nil): omega.Channel
+---@field send fun(self: omega.Channel, data: string)
+---@field read fun(self: omega.Channel, callback: fun(data: string))
+---@field close fun(self: omega.Channel)
