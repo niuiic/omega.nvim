@@ -8,14 +8,13 @@ function Channel:new(cmd, opts)
 	local instance
 
 	local function on_output(_, data)
-		table.insert(instance.output, data)
-
 		if #instance.read_callbacks > 0 then
 			vim.iter(instance.read_callbacks):each(function(callback)
 				callback(data)
 			end)
 			instance.read_callbacks = {}
-			instance.read_index = #instance.output
+		else
+			table.insert(instance.output, data)
 		end
 	end
 
@@ -34,7 +33,6 @@ function Channel:new(cmd, opts)
 		end),
 		output = {},
 		error = {},
-		read_index = 0,
 		read_callbacks = {},
 	}
 
@@ -50,9 +48,9 @@ function Channel:send(data)
 end
 
 function Channel:read(callback)
-	if #self.output > self.read_index then
-		local output = table.concat(self.output, "\n", self.read_index + 1, #self.output)
-		self.read_index = #self.output
+	if #self.output > 0 then
+		local output = vim.fn.join(self.output, "\n")
+		self.output = {}
 		callback(output)
 	else
 		table.insert(self.read_callbacks, callback)
