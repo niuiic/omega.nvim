@@ -4,7 +4,7 @@ if not file then
 end
 
 local parse_line = function(line)
-	local name, type, desc = string.match(line, [[---@field ([%S]+) (fun.+) %[(.*)%]] .. "]")
+	local name, type, desc = string.match(line, [[---@field ([%S]+) (.+) %[(.*)%]] .. "]")
 	if not name then
 		return
 	end

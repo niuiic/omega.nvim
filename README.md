@@ -41,6 +41,7 @@ get_line_ending|fun(bufnr: number): string|get buffer specific line_ending chara
 get_offset_encoding|fun(): string|get offset encoding
 async|fun(fn: fun())|convert a synchronous function to an asynchronous one
 await|fun(fn: fun(resolve: fun(...: any[]))): any, any, ...|wait for a asynchronous function
+Channel|omega.Channel|spawn a process and enable bidirectional communication through stdin/stdout, check omega/channel.test.lua for examples
 
 ## Useful Neovim Builtin Functions
 
