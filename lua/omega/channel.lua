@@ -7,20 +7,23 @@ local Channel = {}
 function Channel:new(cmd, opts)
 	local instance
 
+	local function on_output(_, data)
+		table.insert(instance.output, data)
+
+		if #instance.read_callbacks > 0 then
+			vim.iter(instance.read_callbacks):each(function(callback)
+				callback(data)
+			end)
+			instance.read_callbacks = {}
+			instance.read_index = #instance.output
+		end
+	end
+
 	opts = opts or {}
 	opts = vim.tbl_extend("force", opts, {
 		stdin = true,
-		stdout = function(_, data)
-			table.insert(instance.output, data)
-
-			if #instance.read_callbacks > 0 then
-				vim.iter(instance.read_callbacks):each(function(callback)
-					callback(data)
-				end)
-				instance.read_callbacks = {}
-				instance.read_index = #instance.output
-			end
-		end,
+		stdout = on_output,
+		stderr = on_output,
 	})
 
 	instance = {
@@ -30,6 +33,7 @@ function Channel:new(cmd, opts)
 			end
 		end),
 		output = {},
+		error = {},
 		read_index = 0,
 		read_callbacks = {},
 	}
