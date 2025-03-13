@@ -1,26 +1,29 @@
 local M = {}
 
 function M.diff_text(old_text, new_text, callback)
-	xpcall(
-		require("omega-rs.cli").call,
-		function()
-			callback(M._get_full_text_edits(old_text, new_text))
-		end,
-		{ "diff", "--old-text", string.format('"%s"', old_text), "--new-text", string.format('"%s"', new_text) },
-		nil,
-		function(result)
-			if result.code == 0 and result.stdout ~= "" then
-				local ok, text_edits = pcall(vim.json.decode, result.stdout)
-				if not ok then
-					text_edits = M._get_full_text_edits(old_text, new_text)
-				end
+	local ok, channel = pcall(function()
+		return require("omega.channel"):new({ require("omega-rs.cli").get_cli(), "diff" })
+	end)
+	if not ok then
+		callback({})
+		return
+	end
 
-				callback(text_edits)
-			else
-				callback({})
-			end
+	channel:send(vim.json.encode({
+		old_text = old_text,
+		new_text = new_text,
+	}))
+	channel:send(nil)
+
+	channel:read(function(data)
+		local text_edits
+		ok, text_edits = pcall(vim.json.decode, data)
+		if not ok then
+			text_edits = M._get_full_text_edits(old_text, new_text)
 		end
-	)
+
+		callback(text_edits)
+	end)
 end
 
 function M._get_full_text_edits(old_text, new_text)
